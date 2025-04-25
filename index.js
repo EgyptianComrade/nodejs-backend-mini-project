@@ -53,6 +53,12 @@ app.get('/students', async (req, res) => {
   res.json(students);
 });
 
+app.get('/doctors', async (req, res) => {
+  const doctors = await Doctor.find();
+  res.json(doctors);
+});
+
+
 // 5. Delete a Student by Name
 app.delete('/students/:name', async (req, res) => {
   const result = await Student.deleteOne({ name: req.params.name });
