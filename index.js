@@ -80,12 +80,6 @@ app.get('/all', async (req, res) => {
   res.json({ students, doctors });
 });
 
-// check if the backend is running
-app.get('/', (req, res) => {
-    res.send('Backend is running!');
-  });
-  
-
 app.listen(port, () => {
   console.log(`🚀 Server is running at http://localhost:${port}`);
 });
