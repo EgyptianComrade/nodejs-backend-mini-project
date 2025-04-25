@@ -11,7 +11,7 @@ const port = 3000;
 
 app.use(express.json());
 
-// Connect to MongoDB Atlas
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.error('❌ Connection error:', err));
 
 
-// 1. Add a New Student (Hardcoded)
+
 app.post('/students/hardcoded', async (req, res) => {
   const newStudent = new Student({
     name: 'Ali',
@@ -31,7 +31,7 @@ app.post('/students/hardcoded', async (req, res) => {
   res.send('Hardcoded student added to MongoDB');
 });
 
-// 2. Add a New Student (From Request Body)
+
 app.post('/students', async (req, res) => {
   const { name, age, level, address } = req.body;
   const student = new Student({ name, age, level, address });
@@ -39,7 +39,7 @@ app.post('/students', async (req, res) => {
   res.send('Student added from body');
 });
 
-// 3. Add a New Doctor (From Query Parameters)
+
 app.post('/doctors', async (req, res) => {
   const { name, age, phone } = req.query;
   const doctor = new Doctor({ name, age, phone });
@@ -47,11 +47,12 @@ app.post('/doctors', async (req, res) => {
   res.send('Doctor added via query params');
 });
 
-// 4. Fetch All Students
+
 app.get('/students', async (req, res) => {
   const students = await Student.find();
   res.json(students);
 });
+
 
 app.get('/doctors', async (req, res) => {
   const doctors = await Doctor.find();
@@ -59,13 +60,12 @@ app.get('/doctors', async (req, res) => {
 });
 
 
-// 5. Delete a Student by Name
 app.delete('/students/:name', async (req, res) => {
   const result = await Student.deleteOne({ name: req.params.name });
   res.send(result.deletedCount ? `Deleted student ${req.params.name}` : 'Student not found');
 });
 
-// 6. Update a Doctor’s Name
+
 app.put('/doctors/update-name', async (req, res) => {
   const { oldName, newName } = req.query;
   const doctor = await Doctor.findOne({ name: oldName });
@@ -79,7 +79,7 @@ app.put('/doctors/update-name', async (req, res) => {
   }
 });
 
-// 7. Fetch Both Lists
+
 app.get('/all', async (req, res) => {
   const students = await Student.find();
   const doctors = await Doctor.find();
